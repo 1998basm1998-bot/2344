@@ -1093,6 +1093,12 @@ function attachTabEvents(id, el) {
         sDiv.textContent   = `✓ تم تسجيل القسط ${rcvInstNum} بمبلغ ${fmt(amt)} د.ع للطالب ${updated.fullName}`;
         setTimeout(() => { if (sDiv) sDiv.style.display = 'none'; }, 4000);
       }
+      
+      // التعديل الجديد للطباعة الفورية للوصولات الحرة
+      if (confirm('تم الحفظ بنجاح! هل تريد طباعة وصل قبض للطالبة الآن؟')) {
+        printReceipt(updated.fullName, updated.grade, rcvInstNum, amt, el.querySelector('#rcv-date').value, remAmt(updated));
+      }
+
       const next = newInst.findIndex((sl,i) => i > idx && sl === null);
       rcvInstNum = next === -1 ? rcvInstNum : next + 1;
       refresh();
@@ -1174,3 +1180,51 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   renderTab('tab-students');
 });
+
+/* ================================================================
+   PRINT RECEIPT FUNCTION (طباعة الوصولات)
+   ================================================================ */
+function printReceipt(name, grade, num, amount, date, rem) {
+  const printWin = window.open('', '_blank', 'width=600,height=800');
+  printWin.document.write(`
+    <html dir="rtl">
+    <head>
+      <title>طباعة وصل - \${name}</title>
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+      <style>
+        body { font-family: 'Cairo', sans-serif; padding: 20px; color: #000; background: #fff; }
+        .receipt { border: 2px dashed #333; padding: 20px; max-width: 350px; margin: 0 auto; border-radius: 10px; }
+        .header { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+        .header h2 { margin: 0; font-size: 20px; }
+        .header p { margin: 5px 0 0; font-size: 14px; color: #555; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; border-bottom: 1px dotted #ccc; padding-bottom: 5px;}
+        .row strong { font-weight: 700; }
+        .footer { text-align: center; margin-top: 20px; padding-top: 10px; font-size: 14px; font-weight: bold;}
+        @media print { 
+          body { margin: 0; padding: 0; } 
+          .receipt { border: none; max-width: 100%; } 
+        }
+      </style>
+    </head>
+    <body onload="window.print(); window.close();">
+      <div class="receipt">
+        <div class="header">
+          <h2>ثانوية الغربية الأهلية للبنات</h2>
+          <p>وصل استلام أجور دراسية</p>
+        </div>
+        <div class="row"><span>التاريخ:</span> <strong>\${date}</strong></div>
+        <div class="row"><span>اسم الطالبة:</span> <strong>\${name}</strong></div>
+        <div class="row"><span>الصف:</span> <strong>\${grade}</strong></div>
+        <div class="row"><span>الدفعة:</span> <strong>القسط \${num}</strong></div>
+        <div class="row"><span>المبلغ المستلم:</span> <strong>\${fmt(amount)} د.ع</strong></div>
+        <div class="row"><span>المتبقي بذمة الطالبة:</span> <strong>\${fmt(rem)} د.ع</strong></div>
+        <div class="footer">
+          <p>توقيع الإدارة / المحاسب</p>
+          <br><br>
+          <p style="font-size:11px; color:#666;">تمت الطباعة بواسطة نظام إدارة المدارس - فن التقنية الحديثة</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `);
+  printWin.document.close();
