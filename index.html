@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ثانوية الغربية الأهلية للبنات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="header-logo"><i class="fas fa-school"></i></div>
+      <div class="header-text">
+        <h1>ثانوية الغربية الأهلية للبنات</h1>
+        <span>العام الدراسي 2025 – 2026</span>
+      </div>
+    </header>
+    <main>
+      <div id="tab-students"  class="tab-content active"></div>
+      <div id="tab-receive"   class="tab-content"></div>
+      <div id="tab-eod"       class="tab-content"></div>
+      <div id="tab-staff"     class="tab-content"></div>
+      <div id="tab-expenses"  class="tab-content"></div>
+      <div id="tab-dashboard" class="tab-content"></div>
+    </main>
+    <nav class="bottom-nav">
+      <div class="nav-item active" data-tab="tab-students">
+        <i class="fas fa-users"></i><span>الطلاب</span>
+      </div>
+      <div class="nav-item" data-tab="tab-receive">
+        <i class="fas fa-hand-holding-usd"></i><span>الاستلام</span>
+      </div>
+      <div class="nav-item" data-tab="tab-eod">
+        <i class="fas fa-calendar-check"></i><span>نهاية اليوم</span>
+      </div>
+      <div class="nav-item" data-tab="tab-staff">
+        <i class="fas fa-user-tie"></i><span>الموظفون</span>
+      </div>
+      <div class="nav-item" data-tab="tab-expenses">
+        <i class="fas fa-receipt"></i><span>المصاريف</span>
+      </div>
+      <div class="nav-item" data-tab="tab-dashboard">
+        <i class="fas fa-chart-pie"></i><span>الإحصاء</span>
+      </div>
+    </nav>
+  </div>
+  <div id="modal-root"></div>
+  <script src="script.js"></script>
+</body>
+</html>
